@@ -1,0 +1,7 @@
+{
+  "id": "exosome-11",
+  "keyword": "exosome",
+  "title": "exosome 相关文章 12",
+  "abstract_en": "Author information:\n(1)Key Laboratory of Genomics and Precision Medicine, Beijing Institute of \nGenomics, Chinese Academy of Sciences, Beijing 100101, China; University of \nChinese Academy of Sciences, Beijing 100049, China.\n(2)Department of Obstetrics and Gynecology, Jinan Central Hospital, Shandong \nUniversity, Shandong 250013, China.\n(3)Key Laboratory of Genomics and Precision Medicine, Beijing Institute of \nGenomics, Chinese Academy of Sciences, Beijing 100101, China.\n(4)State Key Laboratory of Biomembrane and Membrane Biotechnology, \nTsinghua-Peking Center for Life Sciences, School of Life Sciences, Tsinghua \nUniversity, Beijing 100084, China.\n(5)Key Laboratory of Genomics and Precision Medicine, Beijing Institute of \nGenomics, Chinese Academy of Sciences, Beijing 100101, China. Electronic \naddress: mishl@big.ac.cn.",
+  "abstract_zh": "[翻译失败] \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742\n"
+}

@@ -1,0 +1,7 @@
+{
+  "id": "exosome-19",
+  "keyword": "exosome",
+  "title": "exosome 相关文章 20",
+  "abstract_en": "The use of extracellular vesicles, specifically exosomes, as carriers of \nbiomarkers in extracellular spaces has been well demonstrated. Despite their \npromising potential, the use of exosomes in the clinical setting is restricted \ndue to the lack of standardization in exosome isolation and analysis methods. \nThe purpose of this review is to not only introduce the different types of \nextracellular vesicles but also to summarize their differences and similarities, \nand discuss different methods of exosome isolation and analysis currently used. \nA thorough understanding of the isolation and analysis methods currently being \nused could lead to some standardization in the field of exosomal research, \nallowing the use of exosomes in the clinical setting to become a reality.",
+  "abstract_zh": "[翻译失败] \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742\n"
+}

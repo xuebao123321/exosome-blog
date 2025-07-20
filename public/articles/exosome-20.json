@@ -1,0 +1,7 @@
+{
+  "id": "exosome-20",
+  "keyword": "exosome",
+  "title": "exosome 相关文章 21",
+  "abstract_en": "DOI: 10.3390/cells8070727\nPMCID: PMC6678302\nPMID: 31311206 [Indexed for MEDLINE]",
+  "abstract_zh": "[翻译失败] \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742\n"
+}
