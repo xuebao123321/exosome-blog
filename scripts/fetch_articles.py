@@ -6,7 +6,7 @@ from Bio import Entrez
 
 Entrez.email = "your_email@example.com"  # 可替换为你自己的邮箱
 openai.api_key = os.getenv("OPENAI_API_KEY")
-keywords = ["exosome", "癌症", "外泌体治疗"]
+keywords = ["exosome", "癌症", "外泌体治疗","exosomes","外泌体"]
 
 def fetch_articles():
     all_results = []
