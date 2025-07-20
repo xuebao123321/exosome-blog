@@ -1,0 +1,7 @@
+{
+  "id": "exosomes-3",
+  "keyword": "exosomes",
+  "title": "exosomes 相关文章 4",
+  "abstract_en": "Author information:\n(1)Department of Child and Adolescent Psychiatry, Shenzhen Kangning Hospital, \nShenzhen Mental Health Center, Shenzhen Key Laboratory for Psychological \nHealthcare & Shenzhen Institute of Mental Health, Shenzhen, 518020, China.\n(2)Department of Chemistry, The Chinese University of Hong Kong, Shatin, Hong \nKong SAR, China.\n(3)Department of Orthopedics, Shenzhen Second People's Hospital (First \nAffiliated Hospital of Shenzhen University, Health Science Center), Shenzhen \n518035, China.",
+  "abstract_zh": "[翻译失败] \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742\n"
+}
