@@ -53,9 +53,14 @@ def fetch_pubmed_ids():
 
 # 获取文章详细信息
 def fetch_article_details(pmid):
-    handle = Entrez.efetch(db="pubmed", id=pmid, retmode="xml")
-    records = Entrez.read(handle)
-    return records[0] if records else {}
+    with Entrez.efetch(db="pubmed", id=pmid, retmode="xml") as handle:
+        records = Entrez.read(handle)
+    
+    # 打印结构调试
+    print(json.dumps(records, indent=2, ensure_ascii=False))
+
+    # 返回主字典即可
+    return records
 
 # 生成 Markdown 内容
 def generate_markdown(title, abstract_en, abstract_zh, pmid):
