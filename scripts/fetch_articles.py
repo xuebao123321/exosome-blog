@@ -46,7 +46,8 @@ def translate(text, prompt):
             temperature=0.3, max_tokens=500
         )
         return r.choices[0].message.content.strip()
-    except:
+    except Exception as e:
+        print("翻译失败:", e)  # 打印出具体错误
         return "[翻译失败]"
 
 def main():
