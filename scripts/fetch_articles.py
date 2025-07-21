@@ -50,5 +50,29 @@ def main():
         with open(f"public/articles/{article['id']}.json", "w") as f:
             json.dump(article, f, ensure_ascii=False, indent=2)
 
+def save_article(article, content_cn):
+    slug = article["title"][:50].replace(" ", "-").replace("/", "-")
+    filename = f"articles/{slug}.md"
+    
+    now = datetime.utcnow()
+    date = now.strftime("%Y-%m-%d")
+    time = now.strftime("%H:%M UTC")
+
+    md = f"""---
+title: "{article['title']}"
+date: {date}
+time: {time}
+source: {article['link']}
+authors: {', '.join(article['authors'])}
+---
+
+{content_cn}
+"""
+
+    os.makedirs("articles", exist_ok=True)
+    with open(filename, "w", encoding="utf-8") as f:
+        f.write(md)
+
+
 if __name__ == "__main__":
     main()
