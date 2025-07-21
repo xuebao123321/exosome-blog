@@ -104,8 +104,11 @@ def main():
     for idx, pmid in enumerate(pmids):
         details = fetch_article_details(pmid)
         article_title = details.get("MedlineCitation", {}).get("Article", {}).get("ArticleTitle", "No Title")
-        abstracts = details.get("MedlineCitation", {}).get("Article", {}).get("Abstract", {}).get("AbstractText", [""])
-        abstract_en = abstracts[0] if isinstance(abstracts, list) else abstracts
+        abstracts = details.get("MedlineCitation", {}).get("Article", {}).get("Abstract", {}).get("AbstractText", [])
+        if isinstance(abstracts, list):
+            abstract_en = " ".join(abstracts)
+        else:
+            abstract_en = abstracts or "无摘要内容"
         source = details.get("MedlineCitation", {}).get("MedlineJournalInfo", {}).get("MedlineTA", "")
         pub_date = details.get("MedlineCitation", {}).get("Article", {}).get("Journal", {}).get("JournalIssue", {}).get("PubDate", {})
         pub_time = pub_date.get("Year", "Unknown")
