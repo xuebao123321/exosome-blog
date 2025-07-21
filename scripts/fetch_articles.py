@@ -21,21 +21,23 @@ def fetch_pubmed_ids():
 
 # 根据文章 ID 获取文章详情
 def fetch_article_details(pmid):
-    handle = Entrez.esummary(db="pubmed", id=pmid, retmode="xml")
-    summary = Entrez.read(handle)
+    Entrez.email = "your_email@example.com"  # 你可以设置为你的邮箱
+    with Entrez.esummary(db="pubmed", id=pmid, retmode="xml") as handle:
+        summary = Entrez.read(handle)
 
-# 如果 summary 是字典（多数情况）
-if isinstance(summary, dict) and "result" in summary:
-    result = summary["result"].get(pmid, {})
-# 如果 summary 是列表
-elif isinstance(summary, list) and len(summary) > 0:
-    result = summary[0]
-else:
-    print("⚠️ 无法解析 summary 结构：", summary)
-    result = {}
-    handle.close()
-    if isinstance(summary, list) and len(summary) > 0:
-    result = summary[0]
+    # 打印 summary 看结构（建议先调试阶段启用）
+    # print(summary)
+
+    # 修正后的数据获取逻辑
+    if isinstance(summary, dict) and "DocumentSummarySet" in summary:
+        doc_summaries = summary["DocumentSummarySet"]["DocumentSummary"]
+        if doc_summaries:
+            return doc_summaries[0]
+    elif isinstance(summary, list) and len(summary) > 0:
+        return summary[0]
+
+    print(f"⚠️ PubMed ID {pmid} 的摘要解析失败。")
+    return {}
 else:
     result = {}
     # 如果没有标题或详情，则赋个默认值
