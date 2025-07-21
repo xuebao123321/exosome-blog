@@ -21,7 +21,7 @@ def fetch_pubmed_ids():
 
 # 根据文章 ID 获取文章详情
 def fetch_article_details(pmid):
-    handle = Entrez.esummary(db="pubmed", id=pmid, retmode="json")
+    handle = Entrez.esummary(db="pubmed", id=pmid, retmode="xml")
     summary = Entrez.read(handle)
     handle.close()
     result = summary.get("result", {}).get(pmid, {})
