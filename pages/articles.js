@@ -15,6 +15,18 @@ export async function getStaticProps() {
 
 export default function Articles({ articles }) {
   return (
+    <div style={{ maxWidth: 700, margin: "auto", padding: 20 }}>
+      <h1>外泌体相关文章</h1>
+      {articles.length === 0 && <p>暂无文章，可等待定时任务首次执行。</p>}
+      {articles.map(a => (
+        <div key={a.id} style={{ marginBottom: 40 }}>
+          <h2>{a.title}</h2>
+          <p><b>英文：</b> {a.abstract_en}</p>
+          <p><b>中文翻译：</b> {a.abstract_zh}</p>
+          <hr />
+        </div>
+      ))}
+    </div>
     <div>
   {articles.map(article => (
     <div key={article.slug} style={{ marginBottom: "2rem", paddingBottom: "1rem", borderBottom: "1px solid #ccc" }}>
