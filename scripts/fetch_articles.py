@@ -43,7 +43,7 @@ def translate(text, prompt):
         print("未设置 OPENAI_API_KEY！")
         return "[未设置 API KEY]"
     try:
-        print(f"翻译中：{prompt[:10]}...")  # 简要提示
+        print(f"翻译中：{prompt[:10]}...")
         r = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt + "\n\n" + text}],
@@ -53,7 +53,8 @@ def translate(text, prompt):
         return r.choices[0].message.content.strip()
     except Exception as e:
         print("翻译失败:", e)
-        with open("translate_error.log", "a") as f:
+        # ✅ 这行必须缩进！确保是 try 的 except 内部！
+        with open("translate_error.log", "a", encoding="utf-8") as f:
             f.write(f"翻译失败: {e}\n")
         return "[翻译失败]"
 
