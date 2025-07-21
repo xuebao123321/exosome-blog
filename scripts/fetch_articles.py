@@ -39,6 +39,7 @@ def fetch_details(pmid):
     }
 
 def translate(text, prompt):
+    print("API KEY 前5位:", openai.api_key[:5] if openai.api_key else "未读取")
     try:
         r = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
@@ -47,8 +48,9 @@ def translate(text, prompt):
         )
         return r.choices[0].message.content.strip()
     except Exception as e:
-        print("翻译失败:", e)  # 打印出具体错误
-        return "[翻译失败]"
+    with open("translate_error.log", "a") as f:
+        f.write(f"翻译失败: {e}\n")
+    return "[翻译失败]"
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
@@ -66,7 +68,7 @@ def main():
             "abstract_en": d["abstract_en"],
             "abstract_zh": zh,
             "source": f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/",
-            "date": f"{d['pubyear']}-{d['pubmonth']}",
+            "date": f"{d['pubyear']}-{d.get('pubmonth', '01') or '01'}",
             "time": dt.strftime("%Y-%m-%d %H:%M UTC")
         }
         data_list.append(rec)
