@@ -5,7 +5,6 @@ import React, { useEffect, useState } from "react";
 type Article = {
   id: string;
   title: string;
-  pmid: string;
   source: string;
   date: string;
   time: string;
@@ -41,8 +40,9 @@ export default function ArticlesPage() {
               </p>
               <p className="mt-2 text-gray-700 line-clamp-4">{article.abstract_zh}</p>
               <a
-                href={`https://pubmed.ncbi.nlm.nih.gov/${article.pmid}`}
+                href={`https://pubmed.ncbi.nlm.nih.gov/${article.id}`}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="inline-block mt-3 text-blue-600 hover:underline"
               >
                 查看原文 &rarr;
