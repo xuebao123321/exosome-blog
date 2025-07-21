@@ -1,7 +1,11 @@
 {
   "id": "exosome-4",
   "keyword": "exosome",
-  "title": "exosome 相关文章 5",
-  "abstract_en": "Exosomes are extracellular vesicles that share components of their parent cells \nand are attractive in biotechnology and biomedical research as potential disease \nbiomarkers as well as therapeutic agents. Crucial to realizing this potential is \nthe ability to manufacture high-quality exosomes; however, unlike biologics such \nas proteins, exosomes lack standardized Good Manufacturing Practices for their \nprocessing and characterization. Furthermore, there is a lack of \nwell-characterized reference exosome materials to aid in selection of methods \nfor exosome isolation, purification, and analysis. This review informs exosome \nresearch and technology development by comparing exosome processing and \ncharacterization methods and recommending exosome workflows. This review also \nprovides a detailed introduction to exosomes, including their physical and \nchemical properties, roles in normal biological processes and in disease \nprogression, and summarizes some of the on-going clinical trials.",
-  "abstract_zh": "[翻译失败] \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742\n"
+  "title": "未知标题",
+  "pmid": "40682273",
+  "source": "Mol Ther",
+  "date": "2025",
+  "time": "2025-07-21 03:22",
+  "abstract_en": "Extracellular vesicles play an indispensable role in a variety of physiological and pathological processes, including embryonic development, cellular migration and malignant transformation of tumors. Tumor-derived exosomes (TDEs) have emerged as a key component of the tumor microenvironment (TME), intricately involved in tumor growth, vascular permeability and pre-metastatic niche (PMN) formation. Consequently, TDEs encapsulate bioactive molecules in their lumen, facilitating their delivery to distant microenvironments and inducing the reprogramming of specific cell types to establish PMNs. This, in turn, endows cancer cells with robust capabilities for growth, metastasis and chemoresistance. In this review, we consolidate current research elucidating the role of small EVs in cancer progression, with a particular focus on cancer metastasis, and their therapeutic potential. In addition, we review novel exosome-based methods, such as single EV profiling, which aim to open new avenues for cancer research, diagnosis and treatment.",
+  "abstract_zh": "[翻译失败]"
 }

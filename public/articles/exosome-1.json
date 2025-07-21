@@ -1,7 +1,11 @@
 {
   "id": "exosome-1",
   "keyword": "exosome",
-  "title": "exosome 相关文章 2",
-  "abstract_en": "Exosome Processing and Characterization Approaches for Research and Technology \nDevelopment.",
-  "abstract_zh": "[翻译失败] \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742\n"
+  "title": "未知标题",
+  "pmid": "40682963",
+  "source": "Immunobiology",
+  "date": "2025",
+  "time": "2025-07-21 03:22",
+  "abstract_en": "The treatment and prognosis for TP53-mutant acute leukemia (AL) are notably unfavorable. Tumor-derived exosomes are participating in tumorigenesis and immunomodulation. Our objective was to characterize the exosome-mediated immune landscape in TP53-mutant AL.",
+  "abstract_zh": "[翻译失败]"
 }

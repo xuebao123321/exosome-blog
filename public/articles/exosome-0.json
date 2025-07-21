@@ -1,7 +1,11 @@
 {
   "id": "exosome-0",
   "keyword": "exosome",
-  "title": "exosome 相关文章 1",
-  "abstract_en": "1. Adv Sci (Weinh). 2022 May;9(15):e2103222. doi: 10.1002/advs.202103222. Epub\n2022  Mar 25.",
-  "abstract_zh": "[翻译失败] \n\nYou tried to access openai.ChatCompletion, but this is no longer supported in openai>=1.0.0 - see the README at https://github.com/openai/openai-python for the API.\n\nYou can run `openai migrate` to automatically upgrade your codebase to use the 1.0.0 interface. \n\nAlternatively, you can pin your installation to the old version, e.g. `pip install openai==0.28`\n\nA detailed migration guide is available here: https://github.com/openai/openai-python/discussions/742\n"
+  "title": "未知标题",
+  "pmid": "40684186",
+  "source": "J Nanobiotechnology",
+  "date": "2025",
+  "time": "2025-07-21 03:22",
+  "abstract_en": "Ocular neovascular diseases (ONDs), including corneal neovascularization (CoNV), age-related macular degeneration (AMD) and diabetic retinopathy (DR), are among the leading causes of visual impairment worldwide. Current therapeutic strategies predominantly involve intravitreal injection of anti-vascular endothelial growth factor (anti-VEGF) agents, which, despite their efficacy, present significant limitations such as drug resistance, frequent intravitreal injections, and insufficient addressing of underlying pathological mechanisms. This review critically examines recent advancements in the application of exosomes as innovative drug delivery platforms for treating ocular neovascular diseases. Exosomes, naturally occurring extracellular vesicles, exhibit superior biocompatibility, low immunogenicity, and intrinsic targeting capabilities, making them ideal carriers for bioactive molecules including proteins, RNAs, and small drugs. We explore the mechanistic roles of exosomes in modulating pathological angiogenesis, inflammation, and tissue repair within the ocular environment. Additionally, this review addresses the current challenges hindering the clinical translation of these exosomes, including large-scale production, regulatory hurdles, and safety concerns. Future perspectives highlight the potential integration of nanoparticles and exosomes with existing therapies, the development of multifunctional and personalized treatment strategies, and the necessity for standardized protocols to facilitate their transition from bench to bedside. By overcoming these challenges, exosomes hold the promise of revolutionizing the therapeutic landscape for ocular neovascular diseases, ultimately enhancing patient outcomes and quality of life.",
+  "abstract_zh": "[翻译失败]"
 }
