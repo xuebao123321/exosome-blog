@@ -20,7 +20,7 @@ def extract_short_title(text):
     prompt = f"从以下英文摘要生成一个不超过15个汉字的中文标题：\n\n{text}"
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
             max_tokens=100
@@ -35,7 +35,7 @@ def translate_text(text):
     prompt = f"请将以下英文科学摘要翻译成通顺的中文：\n\n{text}"
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model="gpt-3",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
             max_tokens=1000
