@@ -24,7 +24,10 @@ def fetch_article_details(pmid):
     handle = Entrez.esummary(db="pubmed", id=pmid, retmode="xml")
     summary = Entrez.read(handle)
     handle.close()
-    result = summary.get("result", {}).get(pmid, {})
+    if isinstance(summary, list) and len(summary) > 0:
+    result = summary[0]
+else:
+    result = {}
     # 如果没有标题或详情，则赋个默认值
     title = result.get("title", "无标题")
     # 构造 PubMed 链接
