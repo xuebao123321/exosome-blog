@@ -14,7 +14,7 @@ KEYWORDS = ["exosome", "癌症", "外泌体治疗"]
 # 根据关键词从 PubMed 搜索文章 ID（这里仅搜索最近5篇）
 def fetch_pubmed_ids():
     query = " OR ".join(KEYWORDS)
-    handle = Entrez.esearch(db="pubmed", term=query, retmode="json", retmax="5")
+    handle = Entrez.esearch(db="pubmed", term=query, retmode="xml", retmax="5")
     record = Entrez.read(handle)
     handle.close()
     return record.get("IdList", [])
