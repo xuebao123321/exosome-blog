@@ -23,6 +23,16 @@ def fetch_pubmed_ids():
 def fetch_article_details(pmid):
     handle = Entrez.esummary(db="pubmed", id=pmid, retmode="xml")
     summary = Entrez.read(handle)
+
+# 如果 summary 是字典（多数情况）
+if isinstance(summary, dict) and "result" in summary:
+    result = summary["result"].get(pmid, {})
+# 如果 summary 是列表
+elif isinstance(summary, list) and len(summary) > 0:
+    result = summary[0]
+else:
+    print("⚠️ 无法解析 summary 结构：", summary)
+    result = {}
     handle.close()
     if isinstance(summary, list) and len(summary) > 0:
     result = summary[0]
