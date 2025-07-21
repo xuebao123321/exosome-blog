@@ -1,115 +1,147 @@
 import os
 import json
+import openai
 from datetime import datetime
 from Bio import Entrez
-import openai
+from pathlib import Path
 
-# 配置参数
-Entrez.email = "your_email@example.com"  # 替换为你的邮箱
+# 设置 Entrez 和 OpenAI
+Entrez.email = "your_email@example.com"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# 关键词设置
-KEYWORDS = ["exosome", "癌症", "外泌体治疗"]
+KEYWORD = "exosome"
+MAX_RESULTS = 5
+OUTPUT_DIR = Path("public/articles")
+MARKDOWN_DIR = Path("public/posts")
+HTML_DIR = Path("public/html")
 
-# 根据关键词从 PubMed 搜索文章 ID（这里仅搜索最近5篇）
-def fetch_pubmed_ids():
-    query = " OR ".join(KEYWORDS)
-    handle = Entrez.esearch(db="pubmed", term=query, retmode="xml", retmax="5")
-    record = Entrez.read(handle)
-    handle.close()
-    return record.get("IdList", [])
-
-# 根据文章 ID 获取文章详情
-def fetch_article_details(pmid):
-    Entrez.email = "your_email@example.com"  # 你可以设置为你的邮箱
-    with Entrez.esummary(db="pubmed", id=pmid, retmode="xml") as handle:
-        summary = Entrez.read(handle)
-
-    # 打印 summary 看结构（建议先调试阶段启用）
-    # print(summary)
-
-    # 修正后的数据获取逻辑
-    if isinstance(summary, dict) and "DocumentSummarySet" in summary:
-        doc_summaries = summary["DocumentSummarySet"]["DocumentSummary"]
-        if doc_summaries:
-            return doc_summaries[0]
-    elif isinstance(summary, list) and len(summary) > 0:
-        return summary[0]
-
-    print(f"⚠️ PubMed ID {pmid} 的摘要解析失败。")
-    return {}
-else:
-    result = {}
-    # 如果没有标题或详情，则赋个默认值
-    title = result.get("title", "无标题")
-    # 构造 PubMed 链接
-    link = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/"
-    # 这里也可提取作者等信息，如 result.get("authors")（可选）
-    return {
-        "id": f"exosome-{pmid}",
-        "title": title,
-        "link": link,
-        "abstract_en": result.get("title", "")  # 此处简化为使用标题作为摘要示例；你可以改为其他摘要字段
-    }
-
-# 使用 OpenAI API 翻译文本（从英文翻译成中文）
-def translate_text(text):
+# 自动提取简短标题
+def extract_short_title(text):
+    prompt = f"从以下英文摘要生成一个不超过15个汉字的中文标题：\n\n{text}"
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": "你是一个优秀的生物医学翻译助手，尽量用简洁和专业的中文翻译下文。"},
-                {"role": "user", "content": f"请将下面的英文翻译成中文：\n\n{text}"}
-            ],
-            temperature=0.3,
-            timeout=15,
+            model="gpt-4",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+            max_tokens=100
         )
-        return response.choices[0].message.content.strip()
+        return response["choices"][0]["message"]["content"].strip()
     except Exception as e:
-        print("翻译失败：", str(e))
+        print("标题提取失败：", e)
+        return "未知标题"
+
+# 翻译摘要
+def translate_text(text):
+    prompt = f"请将以下英文科学摘要翻译成通顺的中文：\n\n{text}"
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,
+            max_tokens=1000
+        )
+        return response["choices"][0]["message"]["content"].strip()
+    except Exception as e:
+        print("翻译失败：", e)
         return "[翻译失败]"
 
-# 自动截断标题至不超过15个字符（超长则加省略号）
-def shorten_title(title):
-    if len(title) > 15:
-        return title[:15] + "…"
-    return title
+# 抓取文章 ID
+def fetch_pubmed_ids():
+    handle = Entrez.esearch(db="pubmed", term=KEYWORD, retmax=MAX_RESULTS, sort="pub+date")
+    record = Entrez.read(handle)
+    return record["IdList"]
 
-# 主函数，整合流程
+# 获取文章详细信息
+def fetch_article_details(pmid):
+    handle = Entrez.efetch(db="pubmed", id=pmid, retmode="xml")
+    records = Entrez.read(handle)
+    return records[0] if records else {}
+
+# 生成 Markdown 内容
+def generate_markdown(title, abstract_en, abstract_zh, pmid):
+    return f"""---
+title: "{title}"
+date: {datetime.now().strftime('%Y-%m-%d %H:%M')}
+pmid: {pmid}
+---
+
+## 英文摘要
+{abstract_en}
+
+## 中文翻译
+{abstract_zh}
+"""
+
+# 生成 HTML 内容（可选）
+def generate_html(title, abstract_en, abstract_zh, pmid):
+    return f"""<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>{title}</title></head>
+<body>
+  <h1>{title}</h1>
+  <p><strong>PMID:</strong> {pmid}</p>
+  <h2>英文摘要</h2>
+  <p>{abstract_en}</p>
+  <h2>中文翻译</h2>
+  <p>{abstract_zh}</p>
+</body>
+</html>
+"""
+
+# 主函数
 def main():
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    MARKDOWN_DIR.mkdir(parents=True, exist_ok=True)
+    HTML_DIR.mkdir(parents=True, exist_ok=True)
+
     pmids = fetch_pubmed_ids()
     print("抓取到的 PubMed ID：", pmids)
-    # 确保保存文件的目录存在
-    output_dir = os.path.join("public", "articles")
-    os.makedirs(output_dir, exist_ok=True)
-    
-    for pmid in pmids:
+
+    all_data = []
+
+    for idx, pmid in enumerate(pmids):
         details = fetch_article_details(pmid)
-        # 翻译文章标题作为示例（你也可以翻译其他摘要内容）
-        translated = translate_text(details["title"])
-        
-        # 获取当前日期和时间
-        now = datetime.utcnow()
-        date_str = now.strftime("%Y-%m-%d")
-        time_str = now.strftime("%H:%M UTC")
-        
-        # 组装 JSON 数据，注意：这里用原标题生成，但前端会自动截断显示
-        article = {
-            "id": details["id"],
-            "title": details["title"],
-            "abstract_en": details["abstract_en"],
-            "abstract_zh": translated,
-            "link": details["link"],
-            "date": date_str,
-            "time": time_str
+        article_title = details.get("MedlineCitation", {}).get("Article", {}).get("ArticleTitle", "No Title")
+        abstract_en = details.get("MedlineCitation", {}).get("Article", {}).get("Abstract", {}).get("AbstractText", [""])[0]
+        source = details.get("MedlineCitation", {}).get("MedlineJournalInfo", {}).get("MedlineTA", "")
+        pub_date = details.get("MedlineCitation", {}).get("Article", {}).get("Journal", {}).get("JournalIssue", {}).get("PubDate", {})
+        pub_time = pub_date.get("Year", "Unknown")
+
+        # 翻译 & 提取标题
+        abstract_zh = translate_text(abstract_en)
+        short_title = extract_short_title(abstract_en)
+
+        data = {
+            "id": f"exosome-{idx}",
+            "keyword": KEYWORD,
+            "title": short_title,
+            "pmid": pmid,
+            "source": source,
+            "date": pub_time,
+            "time": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "abstract_en": abstract_en,
+            "abstract_zh": abstract_zh
         }
-        
-        # 保存 JSON 文件，文件名可以用 date + id 形式保证唯一性
-        filename = f"{date_str}_{pmid}.json"
-        filepath = os.path.join(output_dir, filename)
-        with open(filepath, "w", encoding="utf-8") as f:
-            json.dump(article, f, ensure_ascii=False, indent=2)
-        print(f"保存文章：{filename}")
+
+        all_data.append(data)
+
+        # 写入 JSON 文件（单条）
+        with open(OUTPUT_DIR / f"{data['id']}.json", "w") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+
+        # 写入 Markdown 文件
+        with open(MARKDOWN_DIR / f"{data['id']}.md", "w") as f:
+            f.write(generate_markdown(short_title, abstract_en, abstract_zh, pmid))
+
+        # 写入 HTML 页面（可选）
+        with open(HTML_DIR / f"{data['id']}.html", "w") as f:
+            f.write(generate_html(short_title, abstract_en, abstract_zh, pmid))
+
+    # 写入总索引 JSON 文件（用于前端展示）
+    with open(OUTPUT_DIR / "index.json", "w") as f:
+        json.dump(all_data, f, indent=2, ensure_ascii=False)
+
+    print(f"✅ 抓取完成，共写入 {len(pmids)} 篇文章。")
 
 if __name__ == "__main__":
     main()
