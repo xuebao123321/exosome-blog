@@ -39,18 +39,24 @@ def fetch_details(pmid):
     }
 
 def translate(text, prompt):
-    print("API KEY 前5位:", openai.api_key[:5] if openai.api_key else "未读取")
+    if not openai.api_key:
+        print("未设置 OPENAI_API_KEY！")
+        return "[未设置 API KEY]"
     try:
+        print(f"翻译中：{prompt[:10]}...")  # 简要提示
         r = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[{"role":"user","content": prompt + "\n\n" + text}],
-            temperature=0.3, max_tokens=500
+            messages=[{"role": "user", "content": prompt + "\n\n" + text}],
+            temperature=0.3,
+            max_tokens=500
         )
         return r.choices[0].message.content.strip()
     except Exception as e:
-    with open("translate_error.log", "a") as f:
-        f.write(f"翻译失败: {e}\n")
-    return "[翻译失败]"
+        print("翻译失败:", e)
+        with open("translate_error.log", "a") as f:
+            f.write(f"翻译失败: {e}\n")
+        return "[翻译失败]"
+
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
