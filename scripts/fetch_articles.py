@@ -47,20 +47,18 @@ def translate_text(text):
 
 # 抓取文章 ID
 def fetch_pubmed_ids():
-    handle = Entrez.esearch(db="pubmed", term=KEYWORD, retmax=MAX_RESULTS, sort="pub+date")
-    record = Entrez.read(handle)
-    return record["IdList"]
+    with Entrez.esearch(db="pubmed", term=KEYWORD, retmax=MAX_RESULTS, sort="pub+date") as handle:
+        record = Entrez.read(handle)
+    return record.get("IdList", [])
 
 # 获取文章详细信息
 def fetch_article_details(pmid):
     with Entrez.efetch(db="pubmed", id=pmid, retmode="xml") as handle:
         records = Entrez.read(handle)
-    # records 是 dict，里面有 "PubmedArticle" 键，是列表
     articles = records.get("PubmedArticle", [])
     if articles:
         return articles[0]
     return {}
-
 
 # 生成 Markdown 内容
 def generate_markdown(title, abstract_en, abstract_zh, pmid):
@@ -93,7 +91,6 @@ def generate_html(title, abstract_en, abstract_zh, pmid):
 </html>
 """
 
-# 主函数
 def main():
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     MARKDOWN_DIR.mkdir(parents=True, exist_ok=True)
@@ -107,7 +104,8 @@ def main():
     for idx, pmid in enumerate(pmids):
         details = fetch_article_details(pmid)
         article_title = details.get("MedlineCitation", {}).get("Article", {}).get("ArticleTitle", "No Title")
-        abstract_en = details.get("MedlineCitation", {}).get("Article", {}).get("Abstract", {}).get("AbstractText", [""])[0]
+        abstracts = details.get("MedlineCitation", {}).get("Article", {}).get("Abstract", {}).get("AbstractText", [""])
+        abstract_en = abstracts[0] if isinstance(abstracts, list) else abstracts
         source = details.get("MedlineCitation", {}).get("MedlineJournalInfo", {}).get("MedlineTA", "")
         pub_date = details.get("MedlineCitation", {}).get("Article", {}).get("Journal", {}).get("JournalIssue", {}).get("PubDate", {})
         pub_time = pub_date.get("Year", "Unknown")
@@ -131,19 +129,19 @@ def main():
         all_data.append(data)
 
         # 写入 JSON 文件（单条）
-        with open(OUTPUT_DIR / f"{data['id']}.json", "w") as f:
+        with open(OUTPUT_DIR / f"{data['id']}.json", "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
 
         # 写入 Markdown 文件
-        with open(MARKDOWN_DIR / f"{data['id']}.md", "w") as f:
+        with open(MARKDOWN_DIR / f"{data['id']}.md", "w", encoding="utf-8") as f:
             f.write(generate_markdown(short_title, abstract_en, abstract_zh, pmid))
 
         # 写入 HTML 页面（可选）
-        with open(HTML_DIR / f"{data['id']}.html", "w") as f:
+        with open(HTML_DIR / f"{data['id']}.html", "w", encoding="utf-8") as f:
             f.write(generate_html(short_title, abstract_en, abstract_zh, pmid))
 
     # 写入总索引 JSON 文件（用于前端展示）
-    with open(OUTPUT_DIR / "index.json", "w") as f:
+    with open(OUTPUT_DIR / "index.json", "w", encoding="utf-8") as f:
         json.dump(all_data, f, indent=2, ensure_ascii=False)
 
     print(f"✅ 抓取完成，共写入 {len(pmids)} 篇文章。")
