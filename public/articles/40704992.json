@@ -1,0 +1,10 @@
+{
+  "id": "40704992",
+  "title": "[翻译失败]",
+  "full_title": "Phosphodiesterase 1A physically interacts with YTHDF2 and reinforces the progression of non-small cell lung cancer.",
+  "abstract_en": "Non-small cell lung cancer (NSCLC) is the most common subtype of lung cancer, and the prognosis is poor due to distant metastasis. Thus, there is an urgent need to discover novel therapeutic targets and strategies to overcome metastasis. A series of in vitro and in vivo phenotype experiments were performed to investigate the role of phosphodiesterase 1A (PDE1A) in NSCLC. The RNA binding protein immunoprecipitation (RIP) assay, messenger RNA (mRNA) stability assay, and LC-MS/MS were performed to investigate the molecular mechanisms of PDE1A in NSCLC progression. PDE1A has been shown to promote metastasis and epithelial-mesenchymal transition (EMT) progression of NSCLC. In addition, NSCLC cells overexpressing PDE1A promoted angiogenesis by regulating exosome release. IL-6/JAK/STAT3 signaling pathway was highly enriched in PDE1A-coexpressed genes, and PDE1A promoted NSCLC metastasis by activating the STAT3 pathway. GO enrichment analysis of PDE1A-interacting genes showed that PDE1A might interact with YTHDF2 and participate in m6A-containing RNA binding. The binding between PDE1A and YTHDF2 was verified, and PDE1A regulated the STAT3 pathway by interacting with YTHDF2. The mechanism of the YTHDF2/PDE1A complex in regulating the STAT3 pathway was predicted by overlapping YTHDF2-interacting RNAs and genes coexpressed with YTHDF2 and STAT3. The interactions between YTHDF2 and target mRNAs were predicted, and there were three predicted targets of YTHDF2 with high scores: NRF2, SOCS2, and MET. Indeed, PDE1A interacted with YTHDF2, destabilized SOCS2, and activated the STAT3 pathway. Mechanistic data uncover a novel PDE1A/YTHDF2/STAT3 axis driving NSCLC metastasis and suggest potential therapeutic strategies for metastatic disease.",
+  "abstract_zh": "[翻译失败]",
+  "source": "https://pubmed.ncbi.nlm.nih.gov/40704992/",
+  "date": "2025-Jul",
+  "time": "2025-07-25 03:22 UTC"
+}
